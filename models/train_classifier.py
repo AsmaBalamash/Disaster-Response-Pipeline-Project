@@ -28,7 +28,7 @@ def load_data(database_filepath):
    category_names -> target columns' names
    '''
    engine = create_engine('sqlite:///{}'.format(database_filepath))
-   df = pd.read_sql_table('mytable',engine)
+   df = pd.read_sql_table('MessagesTable',engine)
    X = df['message']
    Y = df.drop(['message','genre', 'id', 'original'],axis=1)
    category_names = Y.columns
@@ -64,7 +64,8 @@ def build_model():
     ])
     parameters =  {'tfidf__use_idf': (True, False), 
               'clf__estimator__n_estimators': [10, 25], 
-              'clf__estimator__min_samples_split': [2, 4]}
+              #'clf__estimator__min_samples_split': [2, 4]
+                  }
     
     #Use grid search to find better parameters.
     cv = GridSearchCV(pipeline, param_grid=parameters)
